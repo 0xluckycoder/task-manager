@@ -29,7 +29,7 @@ export const SideNav = () => {
             <div className={styles.menuItems}>
                 <MenuItem />
                 <MenuItem />
-                {/* <MenuItem /> */}
+                <MenuItem />
             </div>
             {/* <div className={styles.menuItem}>
             </div> */}
@@ -41,7 +41,7 @@ export const SideNav = () => {
 
 const MenuItem = () => {
 
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     const toggleMenu = (): void => {
         setIsExpanded(isExpanded => !isExpanded);
@@ -71,7 +71,7 @@ const MenuItem = () => {
                     <p>Design</p>
                     <p>0%</p>
                 </div>
-                <div className={`${styles.taskItem} ${styles.taskItemsActive}`}>
+                <div className={`${styles.taskItem}`}>
                     <p>Development</p>
                     <p>0%</p>
                 </div>

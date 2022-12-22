@@ -4,12 +4,13 @@
     // border: 1px solid #000;
     position: absolute;
     padding-top: 60px;
-    z-index: -1;
+    // z-index: 1;
     top: 0px;
     background-attachment: #fff;
 
     .accountCard {
-        border: 2px solid red;
+        // border: 2px solid red;
+        background: rgba(128, 128, 128, 0.102);
         height: 95px;
         display: flex;
         justify-content: center;

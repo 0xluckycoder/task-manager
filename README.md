@@ -37,16 +37,27 @@ for mind maps - https://gojs.net/latest/samples/mindMap.html
 
 - [x] - model database with required entities and properties
 
-- [/] - Global
-  - [x] - Navbar
-  - [x] - Sidebar
-    - [/] - Account Card
-    - [/] - Menu Items
-  - [x] - Search bar
-  - [x] - Account Card
-- [/] - Tasks Page
-- [ ] - Workflow Page
-- [ ] - Settings Page
+- Client
+  - [x] - Global
+    - [x] - Navbar
+      - [ ] - Burger bar toggle
+    - [x] - Sidebar
+      - [x] - Account Card
+      - [x] - Menu Items
+    - [x] - Search bar
+    - [x] - Account Card
+  - [ ] - Tasks Page
+    - [ ] - page heading
+    - [ ] - progress bar
+    - [ ] - todo elements
+    - [ ] - Add List form
+    - [ ] - Add Todo form
+  - [ ] - Workflow Page
+  - [ ] - Settings Page
+
+- Express Backend
+
+- Serverless Backend (production)
 
 ### Database Entities
 

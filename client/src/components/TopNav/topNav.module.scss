@@ -1,0 +1,14 @@
+@import '../../App.scss';
+
+.wrapper {
+    background: $primary-color;
+    color: #fff;
+    height: 60px;
+    z-index: 2;
+
+    h1 {
+        margin-left: 1rem;
+        top: calc((60px - 33px) / 2);
+        position: relative;
+    }
+}

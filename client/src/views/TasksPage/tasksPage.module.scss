@@ -1,0 +1,10 @@
+.page {
+    margin-left: 300px;
+    background: #FAF9F8;
+}
+
+@media(max-width: 1000px) {
+    .page {
+        margin-left: 0px;
+    }
+}

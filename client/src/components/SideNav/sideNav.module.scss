@@ -1,0 +1,108 @@
+.wrapper {
+    width: 300px;
+    height: calc(100% - 60px);
+    // border: 1px solid #000;
+    position: absolute;
+    padding-top: 60px;
+    z-index: -1;
+    top: 0px;
+    background-attachment: #fff;
+
+    .accountCard {
+        border: 2px solid red;
+        height: 95px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        .text {
+            gap: 1rem;
+        }
+    }
+
+    .searchBar {
+        margin-top: 10px;
+        width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+        span {
+            border-radius: 50px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            input {
+                
+            }
+        }
+    }
+
+    .menuItems {
+        margin-top: 10px;
+    }
+}
+
+// menu item style
+.menuItem {
+    .workflowItem {
+        padding: 10px 0 10px calc(0.5rem + 5px);
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 16px;
+            p {
+                font-size: 14px;
+            }
+        }
+
+        .downChevron {
+            padding: 0 0.7rem 0 0;
+        }
+
+        &:hover {
+            padding-left: calc(0.5rem);
+            background: rgba(151, 171, 225, 0.2);
+            color: #386DFF;
+            border-left: 5px solid #386DFF;
+        }
+    }
+
+    .activeWorkFlowItem {
+        padding-left: calc(0.5rem);
+        background: rgba(151, 171, 225, 0.2);
+        color: #386DFF;
+        border-left: 5px solid #386DFF;
+    }
+
+    .taskItems {
+        .taskItem {
+            display: flex;
+            padding: 10px 0.5rem 10px 0.5rem;
+            margin-left: 3rem;
+            justify-content: space-between;
+
+            &:hover {
+                cursor: pointer;
+                color: #386DFF;            
+            }
+        }
+
+        .taskItemsActive {
+            cursor: pointer;
+            color: #386DFF;
+        }
+    }
+
+    .expanded {
+        display: none;
+    }
+}
+
+@media(max-width: 1000px) {
+    .wrapper {
+        transform: translateX(-305px);
+    }
+}

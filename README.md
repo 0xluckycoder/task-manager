@@ -1,4 +1,12 @@
-use prop Types and TypeScripthttps://github.com/dzharii/awesome-typescript#built-with-typescript
+### Resources
+
+- For mind maps - https://gojs.net/latest/samples/mindMap.html
+
+- Awesome typescript - https://github.com/dzharii/awesome-typescript#built-with-typescript
+
+- Front page - https://www.canva.com/graphs/flowcharts/
+
+- Real World App - https://codebase.show/projects/realworld?category=frontend&language=typescript
 
 ### Features
 
@@ -17,9 +25,6 @@ Add Later
     - add tags for each todo
     - send email to user end of every month with InSights
     - send summary email to user about tasks
-
-front page - https://www.canva.com/graphs/flowcharts/
-for mind maps - https://gojs.net/latest/samples/mindMap.html
 
 - Workflow - App development project
   - List - UI design
@@ -56,6 +61,12 @@ for mind maps - https://gojs.net/latest/samples/mindMap.html
   - [ ] - Settings Page
 
 - Express Backend
+  - [ ] - configure typescript & nodejs
+    - [x] - install all dependencies with typescript types
+    - [x] - Learn Declaration files in typescript
+    - [/] - Learn Project Configuration
+      - [ ] - Learn TSconfig configuration (https://www.typescriptlang.org/docs/handbook/project-references.htmlaa)
+  - [ ] - Create file structure
 
 - Serverless Backend (production)
 

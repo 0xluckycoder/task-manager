@@ -2,7 +2,7 @@ import UserEntry from "../models/UserEntry"
 
 type User = {
     email: string,
-    password: string
+    subId: string
 }
 
 const createUser = async (data: User) => {

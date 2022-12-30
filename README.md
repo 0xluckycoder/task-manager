@@ -93,13 +93,30 @@ Add Later
   - [ ] - Make sure to authorize endpoints with current logged in user
 
 
-- [ ] - Authentication
+- [/] - Authentication
   - [/] - Cognito user pool
     - [x] - Setup new user pool in AWS (basic email and password)
     - [/] - Configure Login / SignUp / Authorization
+      - [x] - SignUp
+        - [x] - SignUp to cognito
+        - [x] - Confirm Account
+        - [x] - Create User attribute record for the user
+        - [x] - Create Initial stuff records and link with logged in user
+        - [x] - Test
+      - [/] - SignIn
+        - [/] - Provide user name and password and login
+        - [ ] - Get user details
+        - [ ] - Extract tokens from cookies
+        - [ ] - Return new cookies
+        - [ ] - Test
+      - [ ] - Authorization
+
     - [ ] - Enable Federated login later
   - [ ] - Handle forgot password manually (by administrative API)
   - [ ] - Handle Account confirmation manually (by administrative API)
+
+- Compare your code with other well written code
+- Go through TS docs again and learn every bit
 
 - Serverless Backend (production)
 - [ ] - 
@@ -108,8 +125,8 @@ Add Later
 
 - User Entity
   - ID
-  - email
-  - password
+  - subId - String (Cognito FK)
+  - email - String
 
 - Workflow Entity
   - ID

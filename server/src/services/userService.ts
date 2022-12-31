@@ -1,5 +1,11 @@
 import user from '../database/user';
-import { CognitoIdentityProvider, SignUpCommand, AdminConfirmSignUpCommand, AdminInitiateAuthCommand, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider';
+import { 
+    CognitoIdentityProvider, 
+    SignUpCommand, 
+    AdminConfirmSignUpCommand, 
+    AdminInitiateAuthCommand, 
+    GetUserCommand
+} from '@aws-sdk/client-cognito-identity-provider';
 
 type User = {
     email: string,
@@ -55,41 +61,65 @@ const createUser = async (data: User) => {
     }
 }
 
-// const signIn = async (data: User) => {
-//     try {
-//         const client = new CognitoIdentityProvider({
-//             region: process.env.AWS_REGION,
-//             credentials: {
-//                 accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-//                 secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string
-//             }
-//         });
+const signIn = async (data: User) => {
+    try {
+        const client = new CognitoIdentityProvider({
+            region: process.env.AWS_REGION,
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string
+            }
+        });
 
-//         // retrieve user tokens
-//         const adminInitiateAuthCommand = new AdminInitiateAuthCommand({
-//             AuthFlow: "ADMIN_USER_PASSWORD_AUTH",
-//             AuthParameters: {
-//                 USERNAME: data.email,
-//                 PASSWORD: data.password
-//             },
-//             ClientId: process.env.AWS_COGNITO_APP_CLIENT_ID,
-//             UserPoolId: process.env.AWS_USER_POOL_ID
-//         });
+        // retrieve user tokens
+        const adminInitiateAuthCommand = new AdminInitiateAuthCommand({
+            AuthFlow: "ADMIN_USER_PASSWORD_AUTH",
+            AuthParameters: {
+                USERNAME: data.email,
+                PASSWORD: data.password
+            },
+            ClientId: process.env.AWS_COGNITO_APP_CLIENT_ID,
+            UserPoolId: process.env.AWS_USER_POOL_ID
+        });
 
-//         const adminInitiateAuthResponse = await client.send(adminInitiateAuthCommand);
+        const adminInitiateAuthResponse = await client.send(adminInitiateAuthCommand);
 
-//         console.log(adminInitiateAuthResponse);
+        // get user details
+        const getUserCommand = new GetUserCommand({
+            AccessToken: adminInitiateAuthResponse.AuthenticationResult?.AccessToken
+        });
 
-//         // get user details
-//         const getUserCommand = new GetUserCommand({
-//             AccessToken: adminInitiateAuthResponse.AuthenticationResult.AccessToken
-//         });
-//     } catch (error) {
-        
-//     }
-// }
+        const getUserResponse = await client.send(getUserCommand);
+
+        // construct the response
+        const email = getUserResponse.UserAttributes?.find(element => element.Name === "email")?.Value;
+        const subId = getUserResponse.UserAttributes?.find(element => element.Name === "sub")?.Value;
+
+        const attributeData = {
+            email,
+            subId
+        }
+
+        // extract tokens
+        const accessToken = adminInitiateAuthResponse.AuthenticationResult?.AccessToken;
+        const refreshToken = adminInitiateAuthResponse.AuthenticationResult?.RefreshToken;
+        const idToken = adminInitiateAuthResponse.AuthenticationResult?.IdToken;
+
+        return {
+            data: attributeData,
+            tokens: {
+                accessToken,
+                refreshToken,
+                idToken
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export = {
     createUser,
-    // signIn
+    signIn
 }

@@ -66,12 +66,12 @@ Add Later
   - [/] - Design routes for Entries
     - [ ] - Create new user pool
     - [/] - User Routes
-      - [/] - /users/signUp - POST    - Create new user record
-      - [ ] - /users/login  - POST    - Login user
+      - [x] - /users/signUp - POST    - Create new user record
+      - [x] - /users/login  - POST    - Login user
+      - [/] - /users/:id    - GET     - Get single user record
       - [ ] - /users/:id    - PUT     - Update user record
       - [ ] - /users/:id    - DELETE  - Delete user record
-      - [ ] - /users/:id    - GET     - Get single user record
-      - [ ] - /users        - GET     - Get all user records
+      - [-] - /users        - GET     - Get all user records (admin)
     - [ ] - Workflow Routes
       - [ ] - /workflows           - POST    - Create new workflow record
       - [ ] - /workflows/:id       - PUT     - Update single workflow
@@ -103,12 +103,12 @@ Add Later
         - [x] - Create User attribute record for the user
         - [x] - Create Initial stuff records and link with logged in user
         - [x] - Test
-      - [/] - SignIn
-        - [/] - Provide user name and password and login
-        - [ ] - Get user details
-        - [ ] - Extract tokens from cookies
-        - [ ] - Return new cookies
-        - [ ] - Test
+      - [x] - SignIn
+        - [x] - Provide user name and password and login
+        - [x] - Get user details
+        - [x] - Extract tokens from cookies
+        - [x] - Return new cookies
+        - [x] - Test
       - [ ] - Authorization
 
     - [ ] - Enable Federated login later

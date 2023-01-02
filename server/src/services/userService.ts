@@ -4,8 +4,10 @@ import {
     SignUpCommand, 
     AdminConfirmSignUpCommand, 
     AdminInitiateAuthCommand, 
-    GetUserCommand
+    GetUserCommand,
+    InitiateAuthCommand
 } from '@aws-sdk/client-cognito-identity-provider';
+import { CookieSerializeOptions } from 'cookie';
 
 type User = {
     email: string,
@@ -31,8 +33,6 @@ const createUser = async (data: User) => {
         const signUpCommandResponse = await client.send(signUpCommand);
         const authorizeSubId = signUpCommandResponse.UserSub;
 
-        // console.log(signUpCommandResponse, '🐻');
-
         /**
          * implement user account confirmation functionality after setting up email later
          * */ 
@@ -45,6 +45,7 @@ const createUser = async (data: User) => {
         const adminConfirmSignUpResponse = await client.send(adminConfirmSignUpCommand);
         console.log('confirmed', adminConfirmSignUpResponse);
 
+        // Create new attribute object in MongoDB
         const createdUser = await user.createUser({
             email: data.email,
             subId: authorizeSubId as string
@@ -81,20 +82,17 @@ const signIn = async (data: User) => {
             ClientId: process.env.AWS_COGNITO_APP_CLIENT_ID,
             UserPoolId: process.env.AWS_USER_POOL_ID
         });
-
         const adminInitiateAuthResponse = await client.send(adminInitiateAuthCommand);
 
         // get user details
         const getUserCommand = new GetUserCommand({
             AccessToken: adminInitiateAuthResponse.AuthenticationResult?.AccessToken
         });
-
         const getUserResponse = await client.send(getUserCommand);
 
         // construct the response
         const email = getUserResponse.UserAttributes?.find(element => element.Name === "email")?.Value;
         const subId = getUserResponse.UserAttributes?.find(element => element.Name === "sub")?.Value;
-
         const attributeData = {
             email,
             subId
@@ -119,7 +117,79 @@ const signIn = async (data: User) => {
     }
 }
 
+const verifyAuth = async (cookies: any) => {
+    try {
+        const client = new CognitoIdentityProvider({
+            region: process.env.AWS_COGNITO_REGION,
+            credentials: {
+                accessKeyId: process.env.AWS_COGNITO_REGION as string,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string
+            }
+        });
+
+        // validate access token and get user details
+        const getUserCommand = new GetUserCommand({
+            AccessToken: cookies.AccessToken
+        });
+        const getUserResponse = await client.send(getUserCommand);
+
+        // construct the response
+        const email = getUserResponse.UserAttributes?.find(element => element.Name === "email")?.Value as string;
+        const subId = getUserResponse.UserAttributes?.find(element => element.Name === "sub")?.Value as string;
+        const getUserAttributesBySubId = await user.getUserBySubId(subId);
+        const attributeData = {
+            email,
+            subId,
+            _id: getUserAttributesBySubId?._id.toString()
+        }
+
+        return attributeData;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getUserBySubId = async (subId: string) => {
+    try {
+        const userBySubId = await user.getUserBySubId(subId);
+        return userBySubId;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const refreshTokens = async (RefreshToken: string) => {
+    try {
+        const client = new CognitoIdentityProvider({
+            region: process.env.AWS_REGION,
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string
+            }
+        });
+
+        const command = new InitiateAuthCommand({
+            AuthFlow: "REFRESH_TOKEN_AUTH",
+            AuthParameters: {
+                RefreshToken: RefreshToken,
+            },
+            ClientId: process.env.AWS_COGNITO_APP_CLIENT_ID
+        });
+
+        // Retrieve refreshed access & id tokens
+        const initiateAuthCommandResponse = await client.send(command);
+        console.log('new tokens assigned', initiateAuthCommandResponse);
+        return initiateAuthCommandResponse;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     createUser,
-    signIn
+    signIn,
+    verifyAuth,
+    getUserBySubId,
+    refreshTokens
 }

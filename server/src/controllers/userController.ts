@@ -3,6 +3,14 @@ import { Request, Response, NextFunction } from 'express';
 import userService from '../services/userService';
 import { CookieOptions } from 'express';
 
+interface RequestWithUser extends Request {
+    user: {
+        _id: string,
+        email: string,
+        subId: string
+    }
+}
+
 const signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {        
 
@@ -30,7 +38,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction): Promise<
     }
 }
 
-const signIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const signIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // validate schema
         const userSchema = yup.object().shape({
@@ -72,7 +80,94 @@ const signIn = async (req: Request, res: Response, next: NextFunction): Promise<
             success: true,
             data: data
         });
-        
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+/**
+ * @desc Re-authenticate if cookies exists & Refresh expired tokens
+ * @path GET /api/v1/verifyAuth
+ * @authorization Public
+ * */
+const verifyAuth = async (req: Request, res: Response, next: NextFunction) => {
+
+    const { AccessToken, RefreshToken, IdToken } = req.cookies;
+
+    try {
+        // validate cookies
+        if (!AccessToken || !RefreshToken || !IdToken) {
+            const tokenUnavailableError = new Error('no cookies available');
+            tokenUnavailableError.name = 'CookiesUnavailable';            
+            throw tokenUnavailableError;
+        }
+
+        // get user data from cognito
+        const userData = await userService.verifyAuth(req.cookies);
+        console.log('from here');
+        return res.status(200).json({
+            data: userData
+        });
+
+    } catch(error) {
+
+        /**
+         * if AccessToken is expired re-assign new access & id tokens to client
+         * if AccessToken is invalid throw error
+         * */
+
+        if (error instanceof Error) {
+            if (error.name === 'NotAuthorizedException') {
+                console.log('Refreshing the Access/ID tokens 🌟');
+    
+                // user controller code and below code looks identical try to make it reusable
+                try {
+                    const refreshedTokens = await userService.refreshTokens(RefreshToken);
+                    const cookiesConfig: CookieOptions = {
+                        maxAge: (60000 * 60 * 24) * 30,
+                        httpOnly: true,
+                        sameSite: 'none',
+                        secure: true
+                    }
+    
+                    // Clear existing token cookies
+                    res.clearCookie('AccessToken', cookiesConfig);
+                    res.clearCookie('IdToken', cookiesConfig);
+    
+                    // Reassign new access & id token cookies
+                    res.cookie('AccessToken', refreshedTokens.AuthenticationResult?.AccessToken, cookiesConfig);
+                    res.cookie('IdToken', refreshedTokens.AuthenticationResult?.IdToken, cookiesConfig);
+
+                    // Get user data from cognito using refreshed access token
+                    const verifyAuthResponse = await userService.verifyAuth({
+                        AccessToken: refreshedTokens.AuthenticationResult?.AccessToken
+                    });
+
+                    return res.json({
+                        data: verifyAuthResponse
+                    });
+
+                } catch (error) {
+                    console.log(error);
+                    next(error);
+                }
+            }   
+        }
+
+        console.log('❌❌', error);
+        next(error);
+    }
+}
+
+const getUserBySubId = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+    try {
+        const { subId } = req.user;
+        const response = await userService.getUserBySubId(subId);
+
+        res.status(200).json({
+            data: response
+        })
     } catch (error) {
         console.log(error);
     }
@@ -80,5 +175,7 @@ const signIn = async (req: Request, res: Response, next: NextFunction): Promise<
 
 export = {
     signUp,
-    signIn
+    signIn,
+    verifyAuth,
+    getUserBySubId
 }

@@ -15,6 +15,16 @@ const createUser = async (data: User) => {
     }
 }
 
+const getUserBySubId = async (subId: string) => {
+    try {
+        const getUserBySubId = await UserEntry.findOne({ subId });
+        return getUserBySubId;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
-    createUser
+    createUser,
+    getUserBySubId
 }

@@ -63,15 +63,17 @@ Add Later
 - Express Backend
   - [x] - configure typescript & nodejs
   - [x] - Create file structure
+  - [/] - Setup error handling middleware
   - [/] - Design routes for Entries
     - [ ] - Create new user pool
     - [/] - User Routes
-      - [x] - /users/signUp - POST    - Create new user record
-      - [x] - /users/login  - POST    - Login user
-      - [/] - /users/:id    - GET     - Get single user record
-      - [ ] - /users/:id    - PUT     - Update user record
-      - [ ] - /users/:id    - DELETE  - Delete user record
-      - [-] - /users        - GET     - Get all user records (admin)
+      - [x] - /users/signUp     - POST    - Create new user record
+      - [x] - /users/login      - POST    - Login user
+      - [/] - /users/:id        - GET     - Get single user record
+      - [ ] - /users/verifyAuth - GET     - Verify authentication
+      - [ ] - /users/:id        - PUT     - Update user record
+      - [ ] - /users/:id        - DELETE  - Delete user record
+      - [-] - /users            - GET     - Get all user records (admin)
     - [ ] - Workflow Routes
       - [ ] - /workflows           - POST    - Create new workflow record
       - [ ] - /workflows/:id       - PUT     - Update single workflow
@@ -91,6 +93,7 @@ Add Later
       - [ ] - /taskItems/:id                  - PUT     - Update single taskItem record
       - [ ] - /taskItems/:id                 - DELETE  - Delete task item record
   - [ ] - Make sure to authorize endpoints with current logged in user
+  - [ ] - Draw markdown diagram to explain the authentication flow
 
 
 - [/] - Authentication
@@ -109,8 +112,8 @@ Add Later
         - [x] - Extract tokens from cookies
         - [x] - Return new cookies
         - [x] - Test
-      - [ ] - Authorization
-
+      - [/] - Authorization
+      - [/] - Verify Authentication
     - [ ] - Enable Federated login later
   - [ ] - Handle forgot password manually (by administrative API)
   - [ ] - Handle Account confirmation manually (by administrative API)
@@ -119,7 +122,11 @@ Add Later
 - Go through TS docs again and learn every bit
 
 - Serverless Backend (production)
-- [ ] - 
+
+- [ ] - Configure testing Env
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS - learn how cors and cookies works with cross origins
+  - check to see if there are any misconfiguration cookies in express
+  - build the client
 
 ### Database Entities
 

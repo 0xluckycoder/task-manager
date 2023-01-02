@@ -5,6 +5,7 @@ import mongoose, { ConnectOptions } from 'mongoose';
 import cookieParser from 'cookie-parser';
 
 import userRoutes from './v1/api/users';
+import errorHandler from './middleware/errorHandler';
 
 require('dotenv').config();
 
@@ -29,7 +30,7 @@ app.use(cookieParser());
 
 // config cors
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: 'http://localhost:5000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -41,6 +42,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/users', userRoutes);
+
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

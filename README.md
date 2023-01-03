@@ -69,8 +69,8 @@ Add Later
     - [/] - User Routes
       - [x] - /users/signUp     - POST    - Create new user record
       - [x] - /users/login      - POST    - Login user
+      - [x] - /users/verifyAuth - GET     - Verify authentication
       - [/] - /users/:id        - GET     - Get single user record
-      - [ ] - /users/verifyAuth - GET     - Verify authentication
       - [ ] - /users/:id        - PUT     - Update user record
       - [ ] - /users/:id        - DELETE  - Delete user record
       - [-] - /users            - GET     - Get all user records (admin)
@@ -121,7 +121,7 @@ Add Later
       - [x] - Verify Authentication
     - [ ] - Enable Federated login later
   - [ ] - Handle forgot password manually (by administrative API)
-  - [ ] - Handle Account confirmation manually (by administrative API)
+  - [ ] - Handle SignUp Account confirmation manually (by administrative API)
 
 - Compare your code with other well written code
 - Go through TS docs again and learn every bit

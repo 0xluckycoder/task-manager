@@ -3,15 +3,7 @@ import { string } from "yup";
 import user from "../database/user";
 import userService from "../services/userService";
 
-interface RequestWithUser extends Request {
-    user: {
-        _id: string,
-        email: string,
-        subId: string
-    }
-}
-
-export const authorizeRequest = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+export const authorizeRequest = async (req: Request, res: Response, next: NextFunction) => {
     const { AccessToken, RefreshToken, IdToken } = req.cookies;    
 
     try {
@@ -43,7 +35,7 @@ export const authorizeRequest = async (req: RequestWithUser, res: Response, next
          * */
 
         if (error instanceof Error) {
-            if (error.name === 'NotAuthorizedException') {
+            if (error.message === 'Access Token has expired') {
                 console.log('Refreshing the Access/ID tokens 🌟');
     
                 // user controller code and below code looks identical try to make it reusable

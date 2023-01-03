@@ -1,5 +1,6 @@
 import { Router } from "express";
 import userController from '../../controllers/userController';
+import { authorizeRequest } from "../../utils/authorizeRequest";
 
 const router = Router();
 
@@ -9,6 +10,6 @@ router.post('/login', userController.signIn);
 
 router.get('/verifyAuth', userController.verifyAuth);
 
-// router.get('/:id', userController.getUserBySubId);
+router.get('/:id', authorizeRequest, userController.getUserBySubId);
 
 export = router;

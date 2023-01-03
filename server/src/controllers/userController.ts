@@ -3,14 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 import userService from '../services/userService';
 import { CookieOptions } from 'express';
 
-interface RequestWithUser extends Request {
-    user: {
-        _id: string,
-        email: string,
-        subId: string
-    }
-}
-
 const signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {        
 
@@ -161,14 +153,16 @@ const verifyAuth = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const getUserBySubId = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+const getUserBySubId = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        if (req.user === undefined) return;
+        
         const { subId } = req.user;
         const response = await userService.getUserBySubId(subId);
 
         res.status(200).json({
             data: response
-        })
+        });
     } catch (error) {
         console.log(error);
     }

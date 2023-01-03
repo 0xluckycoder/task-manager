@@ -8,6 +8,7 @@ import {
     InitiateAuthCommand
 } from '@aws-sdk/client-cognito-identity-provider';
 import { CookieSerializeOptions } from 'cookie';
+import { UpdatableAttributes } from '../types/custom';
 
 type User = {
     email: string,
@@ -186,10 +187,20 @@ const refreshTokens = async (RefreshToken: string) => {
     }
 }
 
+const updateUserAttributes = async (userId: string, userData: UpdatableAttributes ) => {
+    try {
+        const updateUserAttributes = await user.updateUser(userId, userData);
+        return updateUserAttributes;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     createUser,
     signIn,
     verifyAuth,
     getUserBySubId,
-    refreshTokens
+    refreshTokens,
+    updateUserAttributes
 }

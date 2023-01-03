@@ -10,6 +10,8 @@ router.post('/login', userController.signIn);
 
 router.get('/verifyAuth', userController.verifyAuth);
 
-router.get('/:id', authorizeRequest, userController.getUserBySubId);
+router.get('/', authorizeRequest, userController.getUserBySubId);
+
+router.put('/', authorizeRequest, userController.updateUserAttributes);
 
 export = router;

@@ -164,7 +164,40 @@ const getUserBySubId = async (req: Request, res: Response, next: NextFunction) =
             data: response
         });
     } catch (error) {
-        console.log(error);
+        console.log('❌❌', error);
+        next(error);
+    }
+}
+
+/**
+ * @desc update mongodb user attributes
+ * @path PUT /api/v1/user
+ * @authorization Private
+ * */
+const updateUserAttributes = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (req.user === undefined) return;
+
+        const { _id: userId } = req.user;
+
+        // Validate user input
+        const userSchema = yup.object().shape({
+            email: yup.string()
+                    .required()
+                    .max(127, 'email address is too long')
+                    .email('not a valid email address'),              
+        });
+
+        const validated = await userSchema.validate(req.body);
+        const response = await userService.updateUserAttributes(userId, validated);
+
+        res.status(200).json({
+            data: response
+        });
+
+    } catch (error) {
+        console.log('❌❌', error);
+        next(error);
     }
 }
 
@@ -172,5 +205,6 @@ export = {
     signUp,
     signIn,
     verifyAuth,
-    getUserBySubId
+    getUserBySubId,
+    updateUserAttributes
 }

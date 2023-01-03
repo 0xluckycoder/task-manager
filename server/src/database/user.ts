@@ -1,4 +1,5 @@
 import UserEntry from "../models/UserEntry"
+import { UpdatableAttributes } from "../types/custom";
 
 type User = {
     email: string,
@@ -24,7 +25,17 @@ const getUserBySubId = async (subId: string) => {
     }
 }
 
+const updateUser = async (userId: string, userData: UpdatableAttributes) => {
+    try {
+        const userEntry = await UserEntry.updateOne({ _id: userId }, {...userData});
+        return userEntry;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     createUser,
-    getUserBySubId
+    getUserBySubId,
+    updateUser
 }

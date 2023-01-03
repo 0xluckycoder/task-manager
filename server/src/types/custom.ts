@@ -3,3 +3,7 @@ export type User = {
     email: string,
     subId: string
 }
+
+export type UpdatableAttributes = {
+    email: string
+}

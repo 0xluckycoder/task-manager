@@ -1,6 +1,4 @@
 import { CookieOptions, NextFunction, Request, Response } from "express";
-import { string } from "yup";
-import user from "../database/user";
 import userService from "../services/userService";
 
 export const authorizeRequest = async (req: Request, res: Response, next: NextFunction) => {
@@ -45,7 +43,7 @@ export const authorizeRequest = async (req: Request, res: Response, next: NextFu
                         maxAge: (60000 * 60 * 24) * 30,
                         httpOnly: true,
                         sameSite: 'none',
-                        secure: true
+                        // secure: true
                     }
     
                     // Clear existing token cookies

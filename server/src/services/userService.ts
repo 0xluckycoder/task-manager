@@ -113,7 +113,7 @@ const signIn = async (data: User) => {
         }
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
@@ -146,7 +146,7 @@ const verifyAuth = async (cookies: any) => {
         return attributeData;
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
@@ -155,7 +155,7 @@ const getUserBySubId = async (subId: string) => {
         const userBySubId = await user.getUserBySubId(subId);
         return userBySubId;
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
@@ -172,7 +172,7 @@ const refreshTokens = async (RefreshToken: string) => {
         const command = new InitiateAuthCommand({
             AuthFlow: "REFRESH_TOKEN_AUTH",
             AuthParameters: {
-                RefreshToken: RefreshToken,
+                REFRESH_TOKEN: RefreshToken,
             },
             ClientId: process.env.AWS_COGNITO_APP_CLIENT_ID
         });

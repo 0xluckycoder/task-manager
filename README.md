@@ -94,7 +94,12 @@ Add Later
       - [ ] - /taskItems/:id                 - DELETE  - Delete task item record
   - [ ] - Make sure to authorize endpoints with current logged in user
   - [ ] - Draw markdown diagram to explain the authentication flow
+  - [ ] - Learn to organize typescript project (see how other projects / libraries are architectured)
 
+
+  - [x] - Fix Vulnerability - check explicitly for access token expired error when refreshing the accessToken with refreshToken
+  - [ ] - Fix Vulnerability - older expired access tokens canont be used to get new tokens
+    - Read token based auth guide
 
 - [/] - Authentication
   - [/] - Cognito user pool
@@ -113,7 +118,7 @@ Add Later
         - [x] - Return new cookies
         - [x] - Test
       - [/] - Authorization
-      - [/] - Verify Authentication
+      - [x] - Verify Authentication
     - [ ] - Enable Federated login later
   - [ ] - Handle forgot password manually (by administrative API)
   - [ ] - Handle Account confirmation manually (by administrative API)
@@ -122,11 +127,6 @@ Add Later
 - Go through TS docs again and learn every bit
 
 - Serverless Backend (production)
-
-- [ ] - Configure testing Env
-  - https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS - learn how cors and cookies works with cross origins
-  - check to see if there are any misconfiguration cookies in express
-  - build the client
 
 ### Database Entities
 

@@ -61,7 +61,7 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
             maxAge: (60000 * 60 * 24) * 30,
             httpOnly: true,
             sameSite: 'none',
-            secure: true
+            // secure: true
         }
 
         // clear existing token cookies
@@ -118,7 +118,8 @@ const verifyAuth = async (req: Request, res: Response, next: NextFunction) => {
          * */
 
         if (error instanceof Error) {
-            if (error.name === 'NotAuthorizedException') {
+            console.log(error.message, '🚀🚀');
+            if (error.message === 'Access Token has expired') {
                 console.log('Refreshing the Access/ID tokens 🌟');
     
                 // user controller code and below code looks identical try to make it reusable
@@ -128,7 +129,7 @@ const verifyAuth = async (req: Request, res: Response, next: NextFunction) => {
                         maxAge: (60000 * 60 * 24) * 30,
                         httpOnly: true,
                         sameSite: 'none',
-                        secure: true
+                        // secure: true
                     }
     
                     // Clear existing token cookies

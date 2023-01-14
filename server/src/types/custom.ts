@@ -7,3 +7,15 @@ export type User = {
 export type UpdatableAttributes = {
     email: string
 }
+
+export interface Workflow {
+    _id?: string;
+    name: string;
+    tasks: [string] | [];
+    userId: string;
+}
+
+export interface WorkflowService {
+    name: string,
+    userId: string
+}

@@ -65,17 +65,17 @@ Add Later
   - [x] - Create file structure
   - [/] - Setup error handling middleware
   - [/] - Design routes for Entries
-    - [ ] - Create new user pool
-    - [/] - User Routes
+    - [x] - Create new user pool
+    - [x] - User Routes
       - [x] - /users/signUp     - POST    - Create new user record
       - [x] - /users/login      - POST    - Login user
       - [x] - /users/verifyAuth - GET     - Verify authentication
-      - [/] - /users/:id        - GET     - Get single user record
-      - [ ] - /users/:id        - PUT     - Update user record
-      - [ ] - /users/:id        - DELETE  - Delete user record
+      - [x] - /users/:id        - GET     - Get single user record
+      - [x] - /users/:id        - PUT     - Update user record
+      - [-] - /users/:id        - DELETE  - Delete user record
       - [-] - /users            - GET     - Get all user records (admin)
-    - [ ] - Workflow Routes
-      - [ ] - /workflows           - POST    - Create new workflow record
+    - [/] - Workflow Routes
+      - [/] - /workflows           - POST    - Create new workflow record
       - [ ] - /workflows/:id       - PUT     - Update single workflow
       - [ ] - /workflows/:userId   - GET     - Get all workflows related provided user ID
       - [ ] - /workflows/:id       - GET     - Get single workflow record
@@ -94,17 +94,29 @@ Add Later
       - [ ] - /taskItems/:id                 - DELETE  - Delete task item record
   - [ ] - Make sure to authorize endpoints with current logged in user
   - [ ] - Draw markdown diagram to explain the authentication flow
-  - [ ] - Learn to organize typescript project (see how other projects / libraries are architectured)
+  - [ ] - Learn to organize typescript project (see how other projects / libraries are architecture)
 
+- [ ] - Follow Node Best Practices - https://github.com/goldbergyoni/nodebestpractices
+- [x] - Go through CodingGarden starter TS API
+- [ ] - https://github.com/airbnb/javascript#control-statements - adapt a JS style guide
+- [ ] - Move all dev dependencies to devDependencies
+- [ ] - Learn JEST testing
+
+- [ ] - Learn Generic interfaces - https://chat.openai.com/chat/9270271f-2d83-4836-b3a6-0920522293f9
+- [ ] - Recap the syntax while reading lib code
 
   - [x] - Fix Vulnerability - check explicitly for access token expired error when refreshing the accessToken with refreshToken
   - [ ] - Fix Vulnerability - older expired access tokens canont be used to get new tokens
     - Read token based auth guide
 
-- [/] - Authentication
-  - [/] - Cognito user pool
+#### Code Clean up and restructure
+
+- [ ] - Review open source project and restructure the typescript code
+
+- [x] - Authentication
+  - [x] - Cognito user pool
     - [x] - Setup new user pool in AWS (basic email and password)
-    - [/] - Configure Login / SignUp / Authorization
+    - [x] - Configure Login / SignUp / Authorization
       - [x] - SignUp
         - [x] - SignUp to cognito
         - [x] - Confirm Account
@@ -117,7 +129,7 @@ Add Later
         - [x] - Extract tokens from cookies
         - [x] - Return new cookies
         - [x] - Test
-      - [/] - Authorization
+      - [x] - Authorization
       - [x] - Verify Authentication
     - [ ] - Enable Federated login later
   - [ ] - Handle forgot password manually (by administrative API)
@@ -149,7 +161,7 @@ Add Later
   - KeyFrom - number
   - TaskItems - Array[ID, ID] (FK)
 
-- Task Item
+- Task Item Entity
   - ID
   - Title - String
   - Description - String

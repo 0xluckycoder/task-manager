@@ -5,6 +5,8 @@ import mongoose, { ConnectOptions } from 'mongoose';
 import cookieParser from 'cookie-parser';
 
 import userRoutes from './v1/api/users';
+import workflowRoutes from './v1/api/workflows';
+
 import errorHandler from './middleware/errorHandler';
 
 require('dotenv').config();
@@ -42,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/users', userRoutes);
-
+app.use('/api/v1/workflows', workflowRoutes);
 
 app.use(errorHandler);
 

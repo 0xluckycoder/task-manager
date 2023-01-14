@@ -4,7 +4,8 @@ import { Workflow, WorkflowService } from '../types/custom';
 
 const getWorkflowsByCurrentAuthUser = async (userId: string) => {
     try {
-        // const workflowsByCurrentAuthUser = workflow.
+        const response = workflow.getWorkflowsByCurrentAuthUser(userId);
+        return response;
     } catch (error) {
         throw error;
     }  

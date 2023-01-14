@@ -1,9 +1,12 @@
 import WorkflowEntry from "../models/WorkflowEntry";
 import { Workflow } from "../types/custom";
 
-const getWorkflowsByCurrentAuthUser = async (userId: any) => {
+const getWorkflowsByCurrentAuthUser = async (userId: string) => {
     try {
-        console.log(userId);
+        const getWorkflowsByCurrentAuthUser = WorkflowEntry.find({
+            userId
+        });
+        return getWorkflowsByCurrentAuthUser;
     } catch (error) {
         throw error;
     }  

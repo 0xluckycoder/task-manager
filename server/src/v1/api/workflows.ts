@@ -8,6 +8,8 @@ router.post('/', authorizeRequest, workflowController.createWorkflow);
 
 router.get('/', authorizeRequest, workflowController.getWorkflowsByCurrentAuthUser);
 
-router.put('/:id', authorizeRequest, workflowController.updateWorkflow)
+router.put('/:id', authorizeRequest, workflowController.updateWorkflow);
+
+router.delete('/:id', authorizeRequest, workflowController.deleteWorkflow);
 
 export = router;

@@ -44,9 +44,19 @@ const updateWorkflow = async (id: string, updatableWorkflow: UpdatableWorkflow) 
     }
 }
 
+const deleteWorkflow = async (id: string) => {
+    try {
+        const workflowEntry = await WorkflowEntry.deleteOne({ _id: id });
+        return workflowEntry;
+    } catch(error) {
+        throw error;
+    }
+}
+
 export = {
     getWorkflowsByCurrentAuthUser,
     createWorkflow,
     updateWorkflow,
-    getWorkflowById
+    getWorkflowById,
+    deleteWorkflow
 }

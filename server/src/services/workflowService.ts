@@ -1,3 +1,4 @@
+import { nextTick } from 'process';
 import workflow from '../database/workflow';
 import { UpdatableWorkflow, Workflow, WorkflowService } from '../types/custom';
 // import { UpdatableAttributes } from '../types/custom';
@@ -39,10 +40,23 @@ const updateWorkflow = async (userId: string, id: string, updatableWorkflowData:
     }
 }
 
+const deleteWorkflow = async (userId: string, id: string) => {
+    try {
+        // throw error if workflow record does not belong to the current user
+        const requestedWorkflow = await workflow.getWorkflowById(id);
+        if (requestedWorkflow?.userId !== userId) throw customError('Unauthorized request', 'Unauthorized');
+
+        const response = await workflow.deleteWorkflow(id);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     getWorkflowsByCurrentAuthUser,
     createWorkflow,
     updateWorkflow,
+    deleteWorkflow
     // getSingleWorkflow,
-    // deleteWorkflow
 }

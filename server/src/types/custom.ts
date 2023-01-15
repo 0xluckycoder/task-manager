@@ -11,11 +11,16 @@ export type UpdatableAttributes = {
 export interface Workflow {
     _id?: string;
     name: string;
-    tasks: [string] | [];
+    tasks: string[] | [];
     userId: string;
 }
 
 export interface WorkflowService {
     name: string,
     userId: string
+}
+
+export interface UpdatableWorkflow {
+    name?: string;
+    tasks?: string[];
 }

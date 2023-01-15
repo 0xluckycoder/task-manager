@@ -1,5 +1,5 @@
 import WorkflowEntry from "../models/WorkflowEntry";
-import { Workflow } from "../types/custom";
+import { UpdatableWorkflow, Workflow } from "../types/custom";
 
 const getWorkflowsByCurrentAuthUser = async (userId: string) => {
     try {
@@ -22,7 +22,31 @@ const createWorkflow = async (workflow: Workflow) => {
     }
 }
 
+const getWorkflowById = async (id: string) => {
+    try {
+        const workflowEntry = await WorkflowEntry.findById(id);
+        return workflowEntry;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateWorkflow = async (id: string, updatableWorkflow: UpdatableWorkflow) => {
+    try {
+        const workflowEntry = await WorkflowEntry.updateOne({
+            _id: id
+        }, {
+            ...updatableWorkflow
+        });
+        return workflowEntry;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     getWorkflowsByCurrentAuthUser,
-    createWorkflow
+    createWorkflow,
+    updateWorkflow,
+    getWorkflowById
 }

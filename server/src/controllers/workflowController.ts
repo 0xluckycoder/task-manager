@@ -50,10 +50,38 @@ const createWorkflow = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
+/**
+ * @desc Update workflow
+ * @path PUT /api/v1/workflows/:id
+ * @authorization Private
+ * */ 
+const updateWorkflow = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const { _id: userId } = req.user!;
+
+        // validate user inputs
+        const workflowSchema = yup.object().shape({
+            name: yup.string()
+                        .max(127, 'name is too long'),
+            tasks: yup.array()
+        });
+
+        const validated = await workflowSchema.validate(req.body);
+        const response = await workflowService.updateWorkflow(userId, id, validated);
+        
+        res.status(200).json({
+            data: response
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 export = {
     createWorkflow,
     getWorkflowsByCurrentAuthUser,
+    updateWorkflow,
     // getSingleWorkflow,
-    // updateWorkflow,
     // deleteWorkflow
 }

@@ -1,6 +1,7 @@
 import workflow from '../database/workflow';
-import { Workflow, WorkflowService } from '../types/custom';
+import { UpdatableWorkflow, Workflow, WorkflowService } from '../types/custom';
 // import { UpdatableAttributes } from '../types/custom';
+import { customError } from '../utils/customError';
 
 const getWorkflowsByCurrentAuthUser = async (userId: string) => {
     try {
@@ -25,10 +26,23 @@ const createWorkflow = async (workflowData: WorkflowService) => {
     }
 }
 
+const updateWorkflow = async (userId: string, id: string, updatableWorkflowData: UpdatableWorkflow) => {
+    try {
+        // throw error if workflow record does not belong to the current user
+        const requestedWorkflow = await workflow.getWorkflowById(id);
+        if (requestedWorkflow?.userId !== userId) throw customError('Unauthorized request', 'Unauthorized');
+
+        const response = await workflow.updateWorkflow(id, updatableWorkflowData);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     getWorkflowsByCurrentAuthUser,
-    createWorkflow
+    createWorkflow,
+    updateWorkflow,
     // getSingleWorkflow,
-    // updateWorkflow,
     // deleteWorkflow
 }

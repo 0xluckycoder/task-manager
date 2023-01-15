@@ -12,4 +12,6 @@ router.put('/:id', authorizeRequest, workflowController.updateWorkflow);
 
 router.delete('/:id', authorizeRequest, workflowController.deleteWorkflow);
 
+router.get('/:id', authorizeRequest, workflowController.getWorkflowById);
+
 export = router;

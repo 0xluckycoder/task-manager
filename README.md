@@ -74,12 +74,12 @@ Add Later
       - [x] - /users/:id        - PUT     - Update user record
       - [-] - /users/:id        - DELETE  - Delete user record
       - [-] - /users            - GET     - Get all user records (admin)
-    - [/] - Workflow Routes
-      - [/] - /workflows           - POST    - Create new workflow record
-      - [ ] - /workflows/:id       - PUT     - Update single workflow
-      - [ ] - /workflows/:userId   - GET     - Get all workflows related provided user ID
-      - [ ] - /workflows/:id       - GET     - Get single workflow record
-      - [ ] - /workflows/:id       - DELETE  - Delete single workflow record
+    - [x] - Workflow Routes
+      - [x] - /workflows           - POST    - Create new workflow record
+      - [x] - /workflows/:id       - PUT     - Update single workflow
+      - [x] - /workflows/:userId   - GET     - Get all workflows related provided user ID
+      - [x] - /workflows/:id       - GET     - Get single workflow record
+      - [x] - /workflows/:id       - DELETE  - Delete single workflow record
     - [ ] - Task Route
       - [ ] - /tasks/:workflowId              - POST    - Create new task record for provided workflow ID
       - [ ] - /tasks/workflows/:workflowId    - GET     - Get all tasks related to provided workflow ID

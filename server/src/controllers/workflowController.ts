@@ -98,10 +98,31 @@ const deleteWorkflow = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
+/**
+ * @desc Get Workflow by ID
+ * @path GET /api/v1/workflows/:id
+ * @authorization Private
+ * */
+const getWorkflowById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const { _id: userId } = req.user!;
+
+        const response = await workflowService.getWorkflowById(userId, id);
+
+        res.status(200).json({
+            data: response
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 export = {
     createWorkflow,
     getWorkflowsByCurrentAuthUser,
     updateWorkflow,
-    deleteWorkflow
-    // getSingleWorkflow,
+    deleteWorkflow,
+    getWorkflowById
 }

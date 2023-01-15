@@ -53,10 +53,22 @@ const deleteWorkflow = async (userId: string, id: string) => {
     }
 }
 
+const getWorkflowById = async (userId: string, id: string) => {
+    try {
+        // throw error if workflow record does not belong to the current user
+        const requestedWorkflow = await workflow.getWorkflowById(id);
+        if (requestedWorkflow?.userId !== userId) throw customError('Unauthorized request', 'Unauthorized');
+       
+        return requestedWorkflow;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export = {
     getWorkflowsByCurrentAuthUser,
     createWorkflow,
     updateWorkflow,
-    deleteWorkflow
-    // getSingleWorkflow,
+    deleteWorkflow,
+    getWorkflowById
 }
